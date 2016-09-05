@@ -1,7 +1,6 @@
 const webpack = require('webpack'),
       ExtractTextPlugin = require("extract-text-webpack-plugin")
 
-
 const prod = process.env.BUILD_ENV === 'production'
 
 const extractCSS = new ExtractTextPlugin('[name].css')
@@ -28,10 +27,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015', 'react']
-        }
+        loader: 'babel'
       },
       {
         test: /\.scss$/,

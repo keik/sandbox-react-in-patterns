@@ -20,7 +20,7 @@ watch: node_modules
 	@echo $(TAG)$@$(END)
 	$(npm)/parallelshell \
 		'$(npm)/webpack --config webpack.browser.config.js --watch' \
-		'$(npm)/nodemon lib/server -w lib/server -w build'
+		'$(npm)/nodemon -x $(npm)/babel-node lib/server -w lib/server -w build'
 
 clean:
 	@echo $(TAG)$@$(END)
