@@ -3,24 +3,26 @@ END=" \#\#\# \033[0m\n"
 
 npm=$(shell npm bin)
 
+.PHONY: all start watch build test clean
+
 all: build
 
 start: build
 	@echo $(TAG)$@$(END)
 	BUILD_ENV='production' $(npm)/webpack --config webpack.browser.config.js
 
+watch: node_modules
+	@echo $(TAG)$@$(END)
+	DEBUG="sandbox-react-in-patterns:*" $(npm)/parallelshell \
+		'$(npm)/webpack --config webpack.config.js --watch' \
+		'$(npm)/nodemon build/server --watch build --ignore build/assets'
+
 build: node_modules clean test
 	@echo $(TAG)$@$(END)
-	$(npm)/webpack --config webpack.browser.config.js
+	$(npm)/webpack --config webpack.config.js
 
 test: node_modules
 	$(npm)/eslint lib --ext .js,.jsx
-
-watch: node_modules
-	@echo $(TAG)$@$(END)
-	$(npm)/parallelshell \
-		'$(npm)/webpack --config webpack.browser.config.js --watch' \
-		'$(npm)/nodemon -x $(npm)/babel-node lib/server -w lib/server -w build'
 
 clean:
 	@echo $(TAG)$@$(END)
