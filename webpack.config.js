@@ -25,7 +25,7 @@ module.exports = [
   // for client
   {
     entry: {
-      main: './lib/client/main.js'
+      app: './lib/client/app.js'
     },
     output: {
       path: './build/assets',
@@ -33,6 +33,7 @@ module.exports = [
     },
     target: 'web',
     module: {loaders: client_loaders},
+    resolve: {extensions: ['', '.js', '.json', '.jsx']},
     plugins: prod ? plugins_for_production : plugins
   },
 
@@ -47,6 +48,7 @@ module.exports = [
     },
     target: 'node',
     externals: [webpack_node_externals()],
-    module: {loaders: common_loaders}
+    module: {loaders: common_loaders},
+    resolve: {extensions: ['', '.js', '.json', '.jsx']}
   }
 ]
