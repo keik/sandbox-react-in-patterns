@@ -25,7 +25,9 @@ build: node_modules clean test
 	BUILD_ENV='production' $(npm)/webpack --config webpack.config.js
 
 test: node_modules
+	@echo $(TAG)$@$(END)
 	$(npm)/eslint lib --ext .js,.jsx
+	$(npm)/nyc $(npm)/tape -r babel-register tests/*.js
 
 clean:
 	@echo $(TAG)$@$(END)
