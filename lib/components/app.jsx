@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Title from './title.jsx'
-import UsersList from './users-list.jsx'
+import Title from './title'
+import UsersList from './users-list'
 
 export default class App extends React.Component {
 

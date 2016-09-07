@@ -9,17 +9,20 @@ all: build
 
 start: build
 	@echo $(TAG)$@$(END)
-	BUILD_ENV='production' $(npm)/webpack --config webpack.browser.config.js
+	node build/server
 
 watch: node_modules
 	@echo $(TAG)$@$(END)
+	$(npm)/babel lib --ignore lib/client --out-dir build
 	DEBUG="sandbox-react-in-patterns:*" $(npm)/parallelshell \
-		'$(npm)/webpack --config webpack.config.js --watch' \
+		'$(npm)/babel lib --ignore lib/client --out-dir build --watch --skip-initial-build' \
+		'$(npm)/webpack --config webpack.config.js --devtool sourcemap' \
 		'$(npm)/nodemon build/server --watch build --ignore build/assets'
 
 build: node_modules clean test
 	@echo $(TAG)$@$(END)
-	$(npm)/webpack --config webpack.config.js
+	$(npm)/babel lib --ignore lib/client --out-dir build
+	BUILD_ENV='production' $(npm)/webpack --config webpack.config.js
 
 test: node_modules
 	$(npm)/eslint lib --ext .js,.jsx
