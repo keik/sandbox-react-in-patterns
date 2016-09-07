@@ -21,8 +21,8 @@ watch: node_modules
 
 build: node_modules clean test
 	@echo $(TAG)$@$(END)
-	$(npm)/babel lib --ignore lib/client --out-dir build
-	BUILD_ENV='production' $(npm)/webpack --config webpack.config.js
+	BABEL_DISABLE_CACHE=1 $(npm)/babel lib --ignore lib/client --out-dir build
+	BABEL_DISABLE_CACHE=1 BUILD_ENV=production $(npm)/webpack --config webpack.config.js
 
 test: node_modules
 	@echo $(TAG)$@$(END)
