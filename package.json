@@ -25,6 +25,7 @@
     "nyc": "^8.1.0",
     "parallelshell": "^2.0.0",
     "sass-loader": "^4.0.1",
+    "supertest": "^2.0.0",
     "tape": "^4.6.0",
     "webpack": "^1.13.2"
   },
