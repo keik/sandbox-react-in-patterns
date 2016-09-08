@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - 0.12
+  - 4
+  - node
+script:
+  make test
+cache:
+  directories:
+    - node_modules
+
+after_success: npm i coveralls && $(npm bin)/nyc report --reporter=text-lcov | $(npm bin)/coveralls
