@@ -1,18 +1,34 @@
-import tape from 'tape'
-import apiRouters from '../lib/server/routers/api/'
-
-import express from 'express'
 import request from 'supertest'
+import tape from 'tape'
 
-const app = express()
-app.use(apiRouters[0])
+import main from '../lib/server/app'
+
+let server
+
+tape('setup', t => {
+  server = main()
+  t.end()
+})
 
 let path
 tape(`'GET ${ path = '/api/v1/users' }' should return list of users as JSON string`, t => {
   t.plan(1)
-
-  request(app)
+  request(server)
     .get(path)
     .expect(200, JSON.stringify(['user0', 'user1', 'user2']))
     .end((err, res) => t.error(err))
+})
+
+tape(`'POST ${ path = '/api/v1/users' }' should return list of users as JSON string`, t => {
+  t.plan(1)
+  request(server)
+    .post(path)
+    .send({name: '@@@@@@@@@@@@@@@@@@@@@'})
+    .expect(200, JSON.stringify(['user0', 'user1', 'user2']))
+    .end((err, res) => t.end(err))
+})
+
+tape('teardown', t => {
+  server.close()
+  t.end()
 })

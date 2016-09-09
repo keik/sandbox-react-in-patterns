@@ -1,7 +1,7 @@
-import tape from 'tape'
-import {getRoutesAsString} from '../lib/server/utils'
-
 import express, {Router} from 'express'
+import tape from 'tape'
+
+import {getRoutesAsString} from '../lib/server/utils'
 
 tape(`'${ getRoutesAsString.name }' should return all routes as pretty string`, t => {
   const app = express()
