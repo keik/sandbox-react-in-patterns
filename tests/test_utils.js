@@ -1,7 +1,7 @@
 import express, {Router} from 'express'
 import tape from 'tape'
 
-import {getRoutesAsString} from '../lib/server/utils'
+import {getRoutesAsString, renderFullPage} from '../lib/server/utils'
 
 tape(`'${ getRoutesAsString.name }' should return all routes as pretty string`, t => {
   const app = express()
@@ -21,5 +21,14 @@ tape(`'${ getRoutesAsString.name }' should return all routes as pretty string`, 
                     ''].join('\n')
 
   t.equal(getRoutesAsString(app), expected)
+  t.end()
+})
+
+tape(`'${ renderFullPage.name }' should return full page as HTML string`, t => {
+  const fullHTML = renderFullPage('<p>foo</p>', {a: 1}, 'bar')
+  t.ok(fullHTML.match('bar.css'))
+  t.ok(fullHTML.match('bar.js'))
+  t.ok(fullHTML.match('APP_PROPS = {"a":1}'))
+  t.ok(fullHTML.match('<p>foo</p>'))
   t.end()
 })

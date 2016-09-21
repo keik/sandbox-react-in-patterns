@@ -27,7 +27,10 @@ build: node_modules clean test
 test: node_modules
 	@echo $(TAG)$@$(END)
 	$(npm)/eslint lib --ext .js,.jsx
-	$(npm)/nyc --require babel-register --include 'lib/**' --all $(npm)/tape 'tests/*.js'
+	$(npm)/nyc --require babel-register --all \
+		--include 'lib/**' \
+		--exclude 'lib/{server/index.js,client/app.js}' \
+		$(npm)/tape 'tests/*.js'
 
 clean:
 	@echo $(TAG)$@$(END)
